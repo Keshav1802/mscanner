@@ -1,63 +1,60 @@
-class PostsModels {
-  String? status;
-  String? message;
-  List<Data>? data;
 
-  PostsModels({this.status, this.message, this.data});
+class Post {
+  Post({
+    required this.status,
+    required this.message,
+    required this.data,
+  });
+  late final String status;
+  late final String message;
+  late final List<Data> data;
 
-  PostsModels.fromJson(Map<String, dynamic> json) {
+  Post.fromJson(Map<String, dynamic> json){
     status = json['status'];
     message = json['message'];
-    if (json['data'] != null) {
-      data = <Data>[];
-      json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
-      });
-    }
+    data = List.from(json['data']).map((e)=>Data.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    return data;
+    final _data = <String, dynamic>{};
+    _data['status'] = status;
+    _data['message'] = message;
+    _data['data'] = data.map((e)=>e.toJson()).toList();
+    return _data;
   }
 }
 
 class Data {
-  String? id;
-  String? name;
-  String? location;
-  String? description;
-  String? startDate;
-  String? startTime;
-  String? endDate;
-  String? endTime;
-  String? posterId;
-  String? cover;
-  String? createdBy;
-  String? createdById;
-  List<AttedDetails>? attedDetails;
+  Data({
+    required this.id,
+    required this.name,
+    required this.location,
+    required this.description,
+    required this.startDate,
+    required this.startTime,
+    required this.endDate,
+    required this.endTime,
+    required this.posterId,
+    required this.cover,
+    required this.createdBy,
+    required this.createdById,
+    required this.attedDetails,
+  });
+  late final String id;
+  late final String name;
+  late final String location;
+  late final String description;
+  late final String startDate;
+  late final String startTime;
+  late final String endDate;
+  late final String endTime;
+  late final String posterId;
+  late final String cover;
+  late final String createdBy;
+  late final String createdById;
+  late final List<AttedDetails> attedDetails;
 
-  Data(
-      {this.id,
-        this.name,
-        this.location,
-        this.description,
-        this.startDate,
-        this.startTime,
-        this.endDate,
-        this.endTime,
-        this.posterId,
-        this.cover,
-        this.createdBy,
-        this.createdById,
-        this.attedDetails});
-
-  Data.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json){
     id = json['id'];
     name = json['name'];
     location = json['location'];
@@ -70,71 +67,63 @@ class Data {
     cover = json['cover'];
     createdBy = json['created_by'];
     createdById = json['created_by_id'];
-    if (json['atted_details'] != null) {
-      attedDetails = <AttedDetails>[];
-      json['atted_details'].forEach((v) {
-        attedDetails!.add(new AttedDetails.fromJson(v));
-      });
-    }
+    attedDetails = List.from(json['atted_details']).map((e)=>AttedDetails.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['location'] = this.location;
-    data['description'] = this.description;
-    data['start_date'] = this.startDate;
-    data['start_time'] = this.startTime;
-    data['end_date'] = this.endDate;
-    data['end_time'] = this.endTime;
-    data['poster_id'] = this.posterId;
-    data['cover'] = this.cover;
-    data['created_by'] = this.createdBy;
-    data['created_by_id'] = this.createdById;
-    if (this.attedDetails != null) {
-      data['atted_details'] =
-          this.attedDetails!.map((v) => v.toJson()).toList();
-    }
-    return data;
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['name'] = name;
+    _data['location'] = location;
+    _data['description'] = description;
+    _data['start_date'] = startDate;
+    _data['start_time'] = startTime;
+    _data['end_date'] = endDate;
+    _data['end_time'] = endTime;
+    _data['poster_id'] = posterId;
+    _data['cover'] = cover;
+    _data['created_by'] = createdBy;
+    _data['created_by_id'] = createdById;
+    _data['atted_details'] = attedDetails.map((e)=>e.toJson()).toList();
+    return _data;
   }
 }
 
 class AttedDetails {
-  String? id;
-  String? userId;
-  String? qrCode;
-  String? qrDetails;
-  String? eventId;
-  String? userName;
-  String? eventStartDate;
-  String? eventEndDate;
-  String? startTime;
-  String? endTime;
-  String? location;
-  String? image;
-  String? createOn;
-  String? status;
-  String? isAttend;
+  AttedDetails({
+    required this.id,
+    required this.userId,
+    required this.qrCode,
+    required this.qrDetails,
+    required this.eventId,
+    required this.userName,
+    required this.eventStartDate,
+    required this.eventEndDate,
+    required this.startTime,
+    required this.endTime,
+    required this.location,
+    required this.image,
+    required this.createOn,
+    required this.status,
+    required this.isAttend,
+  });
+  late final String id;
+  late final String userId;
+  late final String qrCode;
+  late final String qrDetails;
+  late final String eventId;
+  late final String userName;
+  late final String eventStartDate;
+  late final String eventEndDate;
+  late final String startTime;
+  late final String endTime;
+  late final String location;
+  late final String image;
+  late final String createOn;
+  late final String status;
+  late final String isAttend;
 
-  AttedDetails(
-      {this.id,
-        this.userId,
-        this.qrCode,
-        this.qrDetails,
-        this.eventId,
-        this.userName,
-        this.eventStartDate,
-        this.eventEndDate,
-        this.startTime,
-        this.endTime,
-        this.location,
-        this.image,
-        this.createOn,
-        this.status,
-        this.isAttend});
-
-  AttedDetails.fromJson(Map<String, dynamic> json) {
+  AttedDetails.fromJson(Map<String, dynamic> json){
     id = json['id'];
     userId = json['user_id'];
     qrCode = json['qr_code'];
@@ -153,22 +142,22 @@ class AttedDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['qr_code'] = this.qrCode;
-    data['qr_details'] = this.qrDetails;
-    data['event_id'] = this.eventId;
-    data['user_name'] = this.userName;
-    data['event_start_date'] = this.eventStartDate;
-    data['event_end_date'] = this.eventEndDate;
-    data['start_time'] = this.startTime;
-    data['end_time'] = this.endTime;
-    data['location'] = this.location;
-    data['image'] = this.image;
-    data['create_on'] = this.createOn;
-    data['status'] = this.status;
-    data['is_attend'] = this.isAttend;
-    return data;
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['user_id'] = userId;
+    _data['qr_code'] = qrCode;
+    _data['qr_details'] = qrDetails;
+    _data['event_id'] = eventId;
+    _data['user_name'] = userName;
+    _data['event_start_date'] = eventStartDate;
+    _data['event_end_date'] = eventEndDate;
+    _data['start_time'] = startTime;
+    _data['end_time'] = endTime;
+    _data['location'] = location;
+    _data['image'] = image;
+    _data['create_on'] = createOn;
+    _data['status'] = status;
+    _data['is_attend'] = isAttend;
+    return _data;
   }
 }

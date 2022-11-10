@@ -14,19 +14,38 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  Future<Post?>? post;
+  List<Data>? postList = [];
   // List<Data> postList = [];
-  Future<List<>> getPostApi() async {
+
+
+  Future<Post> getPostApi() async {
     final response = await http.get(Uri.parse(
         'https://api.msocialin.com/api/Authontication_Controller/event_list'));
-    var data = jsonDecode(response.body.toString());
+    var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
-      for (Map i in data) {
-        postList.add(PostsModels.fromJson(i));
-      }
-      return postList;
+      return Post.fromJson(jsonData);
+      // for (Map i in data) {
+      //   postList.add(PostsModels.fromJson(i));
+      // }
+      // return postList;
     } else {
-      return postList;
+      throw Exception('Failed to load');
     }
+  }
+
+  @override
+  void initState() {
+
+    post = getPostApi();
+    post!.then((value) {
+      setState(() {
+        postList = value!.data;
+      });
+    });
+
+    super.initState();
   }
 
   @override
@@ -40,11 +59,11 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Expanded(
             child: FutureBuilder(
-              future: getPostApi(),
+              future:post,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(
-                      itemCount: postList.length,
+                      itemCount: postList!.length,
                       itemBuilder: (context, index) {
                         return Container(
                             margin: EdgeInsets.all(20),
@@ -54,8 +73,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Positioned.fill(
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(20),
-                                    child: Image.asset(
-                                        postList[index].cover.toString(),
+                                    child: Image.network(
+                                        postList![index].cover.toString(),
                                         // "assets/logo.png",
                                         fit: BoxFit.cover),
                                   ),
@@ -88,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       children: [
                                         const SizedBox(width: 10),
                                         Text(
-                                          postList[index].name.toString(),
+                                          postList![index].name.toString(),
                                           style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 10),
@@ -105,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       children: [
                                         const SizedBox(width: 10),
                                         Text(
-                                          postList[index].startDate.toString(),
+                                          postList![index].startDate.toString(),
                                           style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 11),
@@ -119,7 +138,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         // Text(postList[index].startDate.toString());
                       });
                 } else {
-                  return const Text("Loading");
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
                 }
               },
             ),
